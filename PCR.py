@@ -27,11 +27,14 @@ print np.shape(matrizcov(datos1))
 valoresP=np.linalg.eig(matrizcov(datos1))[0]
 eigenvectors=np.linalg.eig(matrizcov(datos1))[1]
 
+print valoresP
 
-print np.linalg.eig(matrizcov(datos1))[0]
-print np.linalg.eig(np.cov(datos1))[0]
 
 """
+for i in range (30):
+	print "Autovalor: ", valoresP[i], "Autovector: ", eigenvectors[i]
+
+print "Los parametros mas importantes son "
 
 vector1=eigenvectors[:,0]
 vector2=eigenvectors[:,1]
