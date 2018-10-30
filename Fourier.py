@@ -9,8 +9,9 @@ signal=np.transpose(np.genfromtxt("signal.dat",delimiter=","))
 N = 512 # number of point in the whole interval
 freq =np.array(fftfreq(N,signal[0,1]-signal[0,0])) #  frequency in Hz
 
-
-plt.plot(signal[0],signal[1])
+plt.figure()
+plt.plot(signal[0],signal[1],label="Datos originales")
+plt.legend()
 
 
 print np.shape(signal)
@@ -36,7 +37,7 @@ def fourier(f):
 	return b
 
 
-enes=[]
+
 print np.shape(freq), np.shape(abs(fourier(signal[1])))
 
 
@@ -45,7 +46,7 @@ plt.plot(freq,abs(fourier(signal[1])))
 plt.plot(freq,abs(fft(signal[1])))
 
 
-filtro=np.copy(abs(fft(signal[1])))
+filtro=np.copy(fft(signal[1]))
 
 for i in range(len(fft(signal[1]))):
 		
@@ -53,13 +54,34 @@ for i in range(len(fft(signal[1]))):
 		filtro[i]=0
 
 
+
+print np.shape(np.real(ifft(filtro)))
+print np.real(ifft(filtro))
 plt.figure()
+
 plt.plot(signal[0], np.real(ifft(filtro)))
 """
 plt.figure()
 
 plt.plot(freq, filtro)
 """
+
+
+plt.figure()
+f, (ax1, ax2) = plt.subplots(2, 1, sharey=True)
+ax1.plot(freq,abs(fft(signal[1])))
+ax1.set_title('Fourier solo')
+ax2.plot(freq,abs(fourier(signal[1])))
+ax2.set_title('Mi Fourier')
+
+
+
+
+
+
+
+
+
 
 def interpolacionCua(a):
 	f1 = interp1d(a[:,0], a[:,1],kind='quadratic')
@@ -90,64 +112,78 @@ f, (ax1, ax2,ax3) = plt.subplots(3, 1, sharey=True)
 ax1.plot(freq,abs(fourier(signal[1])))
 ax1.set_title('Datos completos')
 ax2.plot(freqcua,abs(fouriercua))
-ax2.set_title('Inter Cua')
+ax2.set_title('InterCua')
 ax3.plot(freqcub,abs(fouriercub))
 ax3.set_title('Inter Cub')
 
-plt.show()
 
 
 
-filtrocua100=np.copy(abs(fouriercua))
 
-for i in range(len(fouriercua)):
-		
-	if abs(freqcua[i])>1000 :
-		filtrocua100[i]=0
-
-filtrocub100=np.copy(abs(fouriercub))
+filtrocua100=np.copy(fouriercua)
 
 for i in range(len(fouriercua)):
 		
 	if abs(freqcua[i])>1000 :
 		filtrocua100[i]=0
 
-filtrocua500=np.copy(abs(fouriercua))
+filtrocub100=np.copy(fouriercub)
+
+for i in range(len(fouriercua)):
+		
+	if abs(freqcua[i])>1000 :
+		filtrocua100[i]=0
+
+filtrocua500=np.copy(fouriercua)
 
 for i in range(len(fouriercua)):
 		
 	if abs(freqcua[i])>500 :
 		filtrocua100[i]=0
 
-filtrocub500=np.copy(abs(fouriercub))
+filtrocub500=np.copy(fouriercub)
 
 for i in range(len(fouriercub)):
 		
 	if abs(freqcua[i])>500 :
 		filtrocua100[i]=0
 
+
+
+
+
+filtro500=np.copy(fft(signal[1]))
+
+for i in range(len(fft(signal[1]))):
+		
+	if abs(freq[i])>500 :
+		filtro500[i]=0
+
+
+
+
 plt.figure()
 f, (ax1, ax2) = plt.subplots(2, 1, sharey=True)
-ax1.plot(signal[0], abs(ifft(filtro)))
-ax1.plot(xnew,abs(ifft(filtrocua100)))
-ax1.plot(xnew,abs(ifft(filtrocub100)))
-
+ax1.plot(signal[0], np.real(ifft(filtro)),label="Datos originales")
+ax1.plot(xnew,np.real(ifft(filtrocua100)),label="Int cua")
+ax1.plot(xnew,np.real(ifft(filtrocub100)),label="Int cub")
+ax1.legend()
 
 ax1.set_title('Filtro 1000')
 
 
 
-#ax2.plot(freqcua,abs(fouriercua))
-ax2.plot(xnew,abs(ifft(filtrocua500)))
-ax2.plot(xnew,abs(ifft(filtrocub500)))
-
+ax2.plot(signal[0], np.real(ifft(filtro500)),label="Datos originales")
+ax2.plot(xnew,np.real(ifft(filtrocua500)),label="Int cua")
+ax2.plot(xnew,np.real(ifft(filtrocub500)),label="Int cub")
+ax2.legend()
 
 
 ax2.set_title('Filtro 500')
 
 
 plt.show()
-
+ 
 
 
 
