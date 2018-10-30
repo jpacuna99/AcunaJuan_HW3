@@ -46,7 +46,28 @@ v2=eigenvectors[:,1]
 pc1=np.dot(np.transpose(datos1),v1)
 pc2=np.dot(np.transpose(datos1),v2)
 
-plt.scatter(pc1,pc2)
+tumor=np.genfromtxt("WDBC.dat", delimiter=",",dtype="unicode")[:,1]
+
+
+print len(tumor)
+buenos1=[]
+malos1=[]
+buenos2=[]
+malos2=[]
+for i in range(len(tumor)):
+	if tumor[i]=="M":
+		malos1.append(pc1[i])
+		malos2.append(pc2[i])
+	if tumor[i]=="B":
+		buenos1.append(pc1[i])
+		buenos2.append(pc2[i])
+
+
+
+plt.scatter(buenos1,buenos2,c="green",label="Benignos")
+
+plt.scatter(malos1,malos2,c="red",label="Daninos")
+plt.legend()
 plt.show()
 
 
