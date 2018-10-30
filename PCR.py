@@ -5,6 +5,16 @@ import matplotlib.pyplot as plt
 datos=np.genfromtxt("WDBC.dat",delimiter=",")
 datos1=np.transpose((np.array(datos)))[2:,:]
 
+for i in range(len(datos1)):
+	datos1[i] = datos1[i]-np.mean(datos1[i])
+	datos1[i]=datos1[i]/(np.sqrt(np.var(datos1[i])))
+
+
+
+
+
+
+
 
 
 
