@@ -12,19 +12,12 @@ freq =np.array(fftfreq(N,signal[0,1]-signal[0,0])) #  frequency in Hz
 plt.figure()
 plt.plot(signal[0],signal[1],label="Datos originales")
 plt.legend()
-
-
-print np.shape(signal)
-
+plt.savefig("AcunaJuan_signal.pdf")
 
 
 
 
-
-
-
-
-# SU implementacion de la transformada de fourier
+# Implementacion de la transformada de fourier
 def fourier(f):
 	b=[]
 	
@@ -37,50 +30,31 @@ def fourier(f):
 	return b
 
 
-
-print np.shape(freq), np.shape(abs(fourier(signal[1])))
-
-
 plt.figure()
-plt.plot(freq,abs(fourier(signal[1])))
-plt.plot(freq,abs(fft(signal[1])))
+plt.plot(freq,abs(fourier(signal[1])),label="Transformanda")
+plt.legend()
+plt.savefig("AcunaJuan_TF.pdf")
 
 
-filtro=np.copy(fft(signal[1]))
 
-for i in range(len(fft(signal[1]))):
+filtro=np.copy(fourier(signal[1]))
+
+for i in range(len(fourier(signal[1]))):
 		
 	if abs(freq[i])>1000 :
 		filtro[i]=0
 
 
 
-print np.shape(np.real(ifft(filtro)))
-print np.real(ifft(filtro))
-plt.figure()
-
-plt.plot(signal[0], np.real(ifft(filtro)))
-"""
-plt.figure()
-
-plt.plot(freq, filtro)
-"""
-
 
 plt.figure()
-f, (ax1, ax2) = plt.subplots(2, 1, sharey=True)
-ax1.plot(freq,abs(fft(signal[1])))
-ax1.set_title('Fourier solo')
-ax2.plot(freq,abs(fourier(signal[1])))
-ax2.set_title('Mi Fourier')
+plt.plot(signal[0], np.real(ifft(filtro)),label="Senal filtrada")
+plt.legend()
+plt.savefig("AcunaJuan_Filtrada.pdf")
 
 
 
-
-
-
-
-
+#Interpolaciones
 
 
 def interpolacionCua(a):
@@ -95,7 +69,6 @@ def interpolacionCub(a):
 xnew=np.linspace(0.000390625 ,0.028515625,512)
 
 incompletos=np.genfromtxt("incompletos.dat",delimiter=",")
-print np.shape(incompletos)
 
 
 
@@ -115,6 +88,7 @@ ax2.plot(freqcua,abs(fouriercua))
 ax2.set_title('InterCua')
 ax3.plot(freqcub,abs(fouriercub))
 ax3.set_title('Inter Cub')
+plt.savefig("AcunaJuan_TF_Interpola.pdf")
 
 
 
@@ -168,7 +142,6 @@ ax1.plot(signal[0], np.real(ifft(filtro)),label="Datos originales")
 ax1.plot(xnew,np.real(ifft(filtrocua100)),label="Int cua")
 ax1.plot(xnew,np.real(ifft(filtrocub100)),label="Int cub")
 ax1.legend()
-
 ax1.set_title('Filtro 1000')
 
 
@@ -180,6 +153,7 @@ ax2.legend()
 
 
 ax2.set_title('Filtro 500')
+plt.savefig("AcunaJuan_2Filtros.pdf")
 
 
 plt.show()
