@@ -11,6 +11,8 @@ freq =np.array(fftfreq(N,signal[0,1]-signal[0,0])) #  frequency in Hz
 
 plt.figure()
 plt.plot(signal[0],signal[1],label="Datos originales")
+plt.xlabel("Tiempo")
+plt.ylabel("Amplitud")
 plt.legend()
 plt.savefig("AcunaJuan_signal.pdf")
 
@@ -32,6 +34,8 @@ def fourier(f):
 
 plt.figure()
 plt.plot(freq,abs(fourier(signal[1])),label="Transformanda")
+plt.xlabel("Frecuencia")
+plt.ylabel("Amplitud")
 plt.legend()
 plt.savefig("AcunaJuan_TF.pdf")
 
@@ -49,10 +53,12 @@ for i in range(len(fourier(signal[1]))):
 
 plt.figure()
 plt.plot(signal[0], np.real(ifft(filtro)),label="Senal filtrada")
+plt.xlabel("Tiempo")
+plt.ylabel("Amplitud")
 plt.legend()
 plt.savefig("AcunaJuan_Filtrada.pdf")
 
-
+print "La frecuencias principales son: ", "137.523, 207.5798 y 382.716 "
 
 #Interpolaciones
 
@@ -64,6 +70,10 @@ def interpolacionCua(a):
 def interpolacionCub(a):
 	f2= interp1d(a[:,0], a[:,1],kind='cubic')	
 	return f2
+
+
+print "La transformada no se puede hacer porque los datos estan muy separados para verse como una frecuencia continua"
+
 
 #Plots de cada interpolacion
 xnew=np.linspace(0.000390625 ,0.028515625,512)
@@ -82,17 +92,24 @@ freqcub =np.array(fftfreq(N,intcub[1]-intcub[0]))
 
 plt.figure()
 f, (ax1, ax2,ax3) = plt.subplots(3, 1, sharey=True)
+plt.subplots_adjust(hspace=0.6)
 ax1.plot(freq,abs(fourier(signal[1])))
+ax1.set_xlabel("Frecuencia")
+ax1.set_ylabel("Amplitud")
 ax1.set_title('Datos completos')
 ax2.plot(freqcua,abs(fouriercua))
+ax2.set_xlabel("Frecuencia")
+ax2.set_ylabel("Amplitud")
 ax2.set_title('InterCua')
 ax3.plot(freqcub,abs(fouriercub))
+ax3.set_xlabel("Frecuencia")
+ax3.set_ylabel("Amplitud")
 ax3.set_title('Inter Cub')
 plt.savefig("AcunaJuan_TF_Interpola.pdf")
 
 
 
-
+print "Se observa que la interpolacion cuadratica agrega mucho mas ruido y no solo en frecuencias alejadas de las principales sino en las principales tambien, mientras que la interpolacion cubica es mucho mas aproximada a los datos completos."
 
 filtrocua100=np.copy(fouriercua)
 
@@ -138,10 +155,13 @@ for i in range(len(fft(signal[1]))):
 
 plt.figure()
 f, (ax1, ax2) = plt.subplots(2, 1, sharey=True)
+plt.subplots_adjust(hspace=0.5)
 ax1.plot(signal[0], np.real(ifft(filtro)),label="Datos originales")
 ax1.plot(xnew,np.real(ifft(filtrocua100)),label="Int cua")
 ax1.plot(xnew,np.real(ifft(filtrocub100)),label="Int cub")
 ax1.legend()
+ax1.set_xlabel("Tiempo")
+ax1.set_ylabel("Amplitud")
 ax1.set_title('Filtro 1000')
 
 
@@ -150,14 +170,15 @@ ax2.plot(signal[0], np.real(ifft(filtro500)),label="Datos originales")
 ax2.plot(xnew,np.real(ifft(filtrocua500)),label="Int cua")
 ax2.plot(xnew,np.real(ifft(filtrocub500)),label="Int cub")
 ax2.legend()
+ax2.set_xlabel("Tiempo")
+ax2.set_ylabel("Amplitud")
 
 
 ax2.set_title('Filtro 500')
 plt.savefig("AcunaJuan_2Filtros.pdf")
 
 
-plt.show()
- 
+
 
 
 
