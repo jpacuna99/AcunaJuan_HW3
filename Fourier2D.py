@@ -19,6 +19,7 @@ freq1 = np.fft.fftfreq(len(fourier2[1]))
 plt.figure()
 plt.imshow(np.log10(abs(np.fft.fftshift(fourier2))),plt.cm.gray)
 plt.colorbar()
+plt.savefig("AcunaJuan_FT2D.pdf")git 
 
 
 filtro=np.copy(fourier2) 
@@ -31,17 +32,18 @@ for i in range(np.shape(fourier2)[0]):
 
 plt.figure()
 plt.imshow(np.log10(abs(np.fft.fftshift(filtro))),plt.cm.gray)
+plt.savefig("AcunaJuan_FT2D_filtrada.pdf")
 plt.colorbar()
 
 plt.figure()
 arbol=ifft2(filtro)
 
 plt.imshow(abs(arbol),plt.cm.gray)
+plt.savefig("AcunaJuan_Imagen_filtrada.pdf")
 
 
 
 
-plt.show()
 
 
 
