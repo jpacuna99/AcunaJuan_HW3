@@ -37,7 +37,7 @@ valoresP=np.linalg.eig(matrizcov(datos1))[0]
 eigenvectors=np.linalg.eig(matrizcov(datos1))[1]
 
 print valoresP
-"""
+
 for i in range (30):
 	print "Autovalor: ", valoresP[i], "Autovector: ", eigenvectors[:,i]
 
@@ -46,7 +46,10 @@ print "Los parametros mas importantes son "
 vector1=eigenvectors[:,0]
 vector2=eigenvectors[:,1]
 print "Se usan los dos primeros autovectores porque sus valores propios son los mas significativos"
-"""
+
+
+print "Los parametros mas importantes son la media del radio y la media de la textura"
+
 
 v1=eigenvectors[:,0]
 v2=eigenvectors[:,1]
@@ -77,7 +80,13 @@ for i in range(len(tumor)):
 plt.scatter(buenos1,buenos2,c="green",label="Benignos")
 
 plt.scatter(malos1,malos2,c="red",label="Daninos")
+plt.xlabel("PC1")
+plt.ylabel("PC2")
 plt.legend()
+plt.savefig("AcunaJuan_PCA")
+
+
+print "Con PCA se ve una clara diferencia entre los diagnosticos favorables y los que no son favorables debido a que los favorables se ven mas juntos y tienen un comportamiento mas predecible, mientras que con los no favorables se ven mas esparcidos y con un comportamiento un poco caotico"
 plt.show()
 
 
